@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="lazyLoadingEnabled" value="false" />
+	</settings>
+	<typeAliases>
+		<typeAlias alias="WxUserInfo" type="com.train.wx.db.model.WxUserInfo"/>
+		<typeAlias alias="WxMenuInfo" type="com.train.wx.db.model.WxMenuInfo"/>
+		<typeAlias alias="WxGroupInfo" type="com.train.wx.db.model.WxGroupInfo"/>
+		<typeAlias alias="WxMetarialInfo" type="com.train.wx.db.model.WxMetarialInfo"/>
+		<typeAlias alias="WxKfInfo" type="com.train.wx.db.model.WxKfInfo"/>
+		<typeAlias alias="WxRedPackInfo" type="com.train.wx.db.model.WxRedPackInfo"/>
+		
+		<typeAlias alias="SysUserInfo" type="com.train.wx.db.model.SysUserInfo"/>
+		<typeAlias alias="SysMenuInfo" type="com.train.wx.db.model.SysMenuInfo"/>
+		
+		<typeAlias alias="SysSearchDto" type="com.train.wx.db.dto.SysSearchDto"/>
+	</typeAliases>
+</configuration>

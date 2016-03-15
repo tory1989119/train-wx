@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.train.wx.db.dao.WxRedPackDao">
+	<!-- 插入信息 -->
+	<insert id="insertWxRedPack" parameterType="WxRedPackInfo" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO WX_SENDREDPACK_INFO (RE_OPENID,MCH_BILLNO,SEND_NAME,TOTAL_AMOUNT,TOTAL_NUM,WISHING,ACT_NAME,REMARK,STATUS,CREATE_TIME)
+		VALUES (#{reOpenid},#{mchBillno},#{sendName},#{totalAmount},#{totalNum},#{wishing},#{actName},#{remark},'0',NOW())
+	</insert>
+	
+	<!-- 发送后修改红包状态-->
+	<update id="updateWxRedPack" parameterType="WxRedPackInfo">
+		UPDATE WX_SENDREDPACK_INFO SET 
+		
+		 <if test="sendTime != null and sendTime != ''">
+		 	SEND_TIME = #{sendTime} ,
+		 </if>
+		 
+		 <if test="sendListid != null and sendListid != ''">
+		 	SEND_LISTID = #{sendListid} ,
+		 </if>
+		 
+		 <if test="error != null and error != ''">
+		 	ERROR = #{error},
+		 </if>
+		 
+		 STATUS = #{status}
+		 WHERE ID = #{id}
+	</update>
+	
+	<!-- 查询微信红包记录 -->
+	<select id="queryWxRedPack" parameterType="SysSearchDto" resultType="WxRedPackInfo" >
+		SELECT 
+		ID id,
+		RE_OPENID reOpenid,
+		MCH_BILLNO mchBillno,
+		SEND_NAME sendName,
+		TOTAL_AMOUNT totalAmount,
+		TOTAL_NUM totalNum,
+		WISHING wishing,
+		ACT_NAME actName,
+		REMARK remark,
+		date_format(SEND_TIME, '%Y-%m-%d %H:%i:%s') sendTime,
+		SEND_LISTID sendListid,
+		STATUS status,
+		date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') createTime 
+		FROM WX_SENDREDPACK_INFO
+		WHERE 1 = 1
+		
+		<if test="openid != null and openid != ''">
+			AND RE_OPENID = #{openid}
+		</if>
+		
+		<if test="startDate != null and startDate != ''">
+			<![CDATA[
+				AND date_format(CREATE_TIME, '%Y-%m-%d') >= str_to_date(#{startDate},'%Y-%m-%d') 
+			]]>
+		</if>
+		
+		<if test="endDate != null and endDate != ''">
+			<![CDATA[
+				AND date_format(CREATE_TIME, '%Y-%m-%d') <= str_to_date(#{endDate},'%Y-%m-%d')
+			]]>
+		</if>
+		
+		<if test="status != null and status != ''">
+			AND STATUS = #{status}
+		</if>
+		ORDER BY CREATE_TIME DESC LIMIT #{begin},#{rows}
+	</select>
+	
+	<!-- 查询微信红包记录数 -->
+	<select id="countWxRedPack" parameterType="SysSearchDto" resultType="int" >
+		SELECT COUNT(ID) 
+		FROM WX_SENDREDPACK_INFO
+		WHERE 1 = 1
+		
+		<if test="openid != null and openid != ''">
+			AND RE_OPENID = #{openid}
+		</if>
+		
+		<if test="startDate != null and startDate != ''">
+			<![CDATA[
+				AND date_format(CREATE_TIME, '%Y-%m-%d') >= str_to_date(#{startDate},'%Y-%m-%d') 
+			]]>
+		</if>
+		
+		<if test="endDate != null and endDate != ''">
+			<![CDATA[
+				AND date_format(CREATE_TIME, '%Y-%m-%d') <= str_to_date(#{endDate},'%Y-%m-%d')
+			]]>
+		</if>
+		
+		<if test="status != null and status != ''">
+			AND STATUS = #{status}
+		</if>
+	</select>
+	
+		<!-- 查询需要发送的红包 -->
+	<select id="queryWxRedPackForJob" parameterType="SysSearchDto" resultType="WxRedPackInfo" >
+		SELECT 
+		ID id,
+		RE_OPENID reOpenid,
+		MCH_BILLNO mchBillno,
+		SEND_NAME sendName,
+		TOTAL_AMOUNT totalAmount,
+		TOTAL_NUM totalNum,
+		WISHING wishing,
+		ACT_NAME actName,
+		REMARK remark,
+		date_format(SEND_TIME, '%Y-%m-%d %H:%i:%s') sendTime,
+		SEND_LISTID sendListid,
+		STATUS status,
+		date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') createTime 
+		FROM WX_SENDREDPACK_INFO
+		WHERE STATUS = '0'
+		ORDER BY CREATE_TIME LIMIT #{begin},#{rows} 
+	</select>
+	
+</mapper>
