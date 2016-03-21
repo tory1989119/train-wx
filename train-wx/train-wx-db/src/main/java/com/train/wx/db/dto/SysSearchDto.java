@@ -27,6 +27,16 @@ public class SysSearchDto {
 	 * 用户的标识，对当前公众号唯一
 	 */
 	private String openid;
+	
+	/**
+	 * organizationId
+	 */
+	private String organizationId;
+	
+	/**
+	 * courseId
+	 */
+	private String courseId;
 	/**
 	 * 页数
 	 */
@@ -103,6 +113,22 @@ public class SysSearchDto {
 
 	public void setRows(Integer rows) {
 		this.rows = rows;
+	}
+
+	public String getOrganizationId() {
+		return organizationId;
+	}
+
+	public void setOrganizationId(String organizationId) {
+		this.organizationId = organizationId;
+	}
+
+	public String getCourseId() {
+		return courseId;
+	}
+
+	public void setCourseId(String courseId) {
+		this.courseId = courseId;
 	}
 
 }

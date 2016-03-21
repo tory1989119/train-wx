@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.train.wx.db.dao.HotCourseDao">
+	<!-- 插入信息 -->
+	<insert id="insertHotCourse" parameterType="HotCourseInfo" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO T_HOT_COURSE_INFO (TUITION_ID,TYPE,CREATE_TIME)
+		VALUES (#{tution_id},#{type},NOW())
+	</insert>
+	
+	<!-- 查询列表 -->
+	<select id="queryHotCourse" parameterType="HotCourseInfo" resultType="HotCourseDto" >
+		SELECT 
+		thci.ID id,
+		thci.TYPE type,
+		thci.TUITION_ID tuition_id,
+		thci.READ_NUM readNum,
+		thci.LIKE_NUM likeNum,
+		thci.CREATE_TIME createTime,
+		tti.price price,
+		tci.id courseId,
+		tcimg.url url,
+		tci.name courseName,
+		toi.id organizationId,
+		toi.name organizationName
+		FROM T_HOT_COURSE_INFO thci
+		LEFT JOIN T_TUITION_INFO tti ON tti.id = thci.tuition_id
+		LEFT JOIN T_COURSE_INFO tci ON tci.id = tti.course_id
+		LEFT JOIN T_COURSE_IMG tcimg ON tcimg.course_id = tti.course_id
+		LEFT JOIN T_ORGANIZATION_INFO toi ON toi.id = tci.organization_id
+		WHERE thci.TYPE = #{type}
+	</select>
+	
+</mapper>

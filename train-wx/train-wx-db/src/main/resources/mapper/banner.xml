@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.train.wx.db.dao.BannerDao">
+	<!-- 插入信息 -->
+	<insert id="insertBanner" parameterType="BannerInfo" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO T_BANNER_INFO (NAME,PICTURE_URL,LINK_URL,TYPE,CREATE_TIME)
+		VALUES (#{name},#{pictureUrl},#{linkUrl},#{type},NOW())
+	</insert>
+	
+	<!-- 查询列表 -->
+	<select id="queryBanner" parameterType="BannerInfo" resultType="BannerInfo" >
+		SELECT 
+		ID id,
+		NAME name,
+		PICTURE_URL pictureUrl,
+		LINK_URL linkUrl
+		FROM T_BANNER_INFO
+		WHERE TYPE = #{type}
+	</select>
+	
+	<!-- 更新 -->
+	<update id="updateBanner" parameterType="BannerInfo">
+		UPDATE T_BANNER_INFO SET 
+		NAME = #{name},
+		PICTURE_URL = #{pictureUrl},
+		LINK_URL = #{linkUrl},
+		TYPE = #{type}
+		WHERE ID = #{id}
+	</update>
+</mapper>

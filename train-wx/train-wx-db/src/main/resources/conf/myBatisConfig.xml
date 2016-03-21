@@ -16,7 +16,23 @@
 		
 		<typeAlias alias="SysUserInfo" type="com.train.wx.db.model.SysUserInfo"/>
 		<typeAlias alias="SysMenuInfo" type="com.train.wx.db.model.SysMenuInfo"/>
+		<typeAlias alias="SysAttributeInfo" type="com.train.wx.db.model.SysAttributeInfo"/>
 		
 		<typeAlias alias="SysSearchDto" type="com.train.wx.db.dto.SysSearchDto"/>
+		
+		
+		<typeAlias alias="BannerInfo" type="com.train.wx.db.model.BannerInfo"/>
+		<typeAlias alias="HotCourseInfo" type="com.train.wx.db.model.HotCourseInfo"/>
+		<typeAlias alias="OrganizationInfo" type="com.train.wx.db.model.OrganizationInfo"/>
+		<typeAlias alias="CourseInfo" type="com.train.wx.db.model.CourseInfo"/>
+		<typeAlias alias="TuitionInfo" type="com.train.wx.db.model.TuitionInfo"/>
+		
+		<typeAlias alias="CourseImg" type="com.train.wx.db.model.CourseImg"/>
+		<typeAlias alias="EnvironmentImg" type="com.train.wx.db.model.EnvironmentImg"/>
+		<typeAlias alias="TeacherImg" type="com.train.wx.db.model.TeacherImg"/>
+		
+		<typeAlias alias="CourseType" type="com.train.wx.db.model.CourseType"/>
+		
+		<typeAlias alias="HotCourseDto" type="com.train.wx.db.dto.HotCourseDto"/>
 	</typeAliases>
 </configuration>

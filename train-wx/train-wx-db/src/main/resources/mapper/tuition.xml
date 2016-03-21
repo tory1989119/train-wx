@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.train.wx.db.dao.TuitionDao">
+	<!-- 插入信息 -->
+	<insert id="insertTuition" parameterType="TuitionInfo" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO T_TUITION_INFO (COURSE_ID,AGE,CLASS_TIME,QUARTER_HOUR,PRICE,TOTAL,CREATE_TIME)
+		VALUES (#{courseId},#{age},#{classTime},#{quarterHour}#{price}#{total},NOW())
+	</insert>
+	
+	<!-- 查询列表 -->
+	<select id="queryTuition" parameterType="String" resultType="TuitionInfo" >
+		SELECT
+		ID id, 
+		COURSE_ID courseId,
+		AGE age,
+		CLASS_TIME classTime,
+		QUARTER_HOUR quarterHour,
+		PRICE price,
+		TOTAL total,
+		CREATE_TIME createTime
+		FROM T_TUITION_INFO
+		WHERE COURSE_ID = #{courseId}
+	</select>
+</mapper>

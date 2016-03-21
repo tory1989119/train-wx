@@ -16,7 +16,7 @@
 	</bean>
 	
     <!-- 设置使用注解的类所在的jar包 -->  
-    <context:component-scan base-package="com.pet.wx"></context:component-scan>
+    <context:component-scan base-package="com.train.wx"></context:component-scan>
     
     <import resource="classpath*:conf/spring-transaction.xml"/>
     <import resource="classpath*:conf/spring-mybatis.xml"/>

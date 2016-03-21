@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.train.wx.db.dao.CourseDao">
+	<!-- 插入信息 -->
+	<insert id="insertCourse" parameterType="CourseInfo" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO T_COURSE_INFO (ORGANIZATION_ID,TYPE,NAME,AGE,CONTENT,FEATURE,IMG,CREATE_TIME)
+		VALUES (#{organizationId},#{type},#{name},#{age},#{content},#{feature},#{img},NOW())
+	</insert>
+	
+	<!-- 查询详细信息 -->
+	<select id="getCourseInfo" parameterType="String" resultType="CourseInfo" >
+		SELECT 
+		ID id ,
+		ORGANIZATION_ID organizationId,
+		TYPE type,
+		NAME name,
+		AGE age,
+		CONTENT content,
+		FEATURE feature,
+		IMG img,
+		CREATE_TIME createTime
+		FROM T_COURSE_INFO
+		WHERE Id = #{id}
+	</select>
+	
+	<!-- 查询列表 -->
+	<select id="queryCourse" parameterType="SysSearchDto" resultType="CourseInfo" >
+		SELECT 
+		ID id ,
+		ORGANIZATION_ID organizationId,
+		TYPE type,
+		NAME name,
+		AGE age,
+		CONTENT content,
+		FEATURE feature,
+		IMG img,
+		CREATE_TIME createTime
+		FROM T_COURSE_INFO
+		WHERE 1=1
+		<if test="organizationId != null and organizationId != ''">
+			AND ORGANIZATION_ID = #{organizationId}
+		</if>
+		LIMIT #{begin},#{rows}
+	</select>
+	
+	<!-- 查询列表数 -->
+	<select id="countCourse" parameterType="SysSearchDto" resultType="int" >
+		SELECT 
+		count(*)
+		FROM T_COURSE_INFO
+		WHERE 1=1
+		<if test="organizationId != null and organizationId != ''">
+			AND ORGANIZATION_ID = #{organizationId}
+		</if>
+		LIMIT #{begin},#{rows}
+	</select>
+	
+	<!-- 查询课程图片 -->
+	<select id="queryCourseImg" parameterType="String" resultType="CourseImg" >
+		SELECT 
+		ID id,
+		NAME name,
+		URL url,
+		CREATE_TIME createTime
+		FROM T_COURSE_IMG
+		WHERE COURSE_ID = #{courseId}
+	</select>
+	
+	<!-- 查询课程类型 -->
+	<select id="queryCourseType" parameterType="String" resultType="CourseType" >
+		SELECT 
+		DISTINCT(tci.TYPE) code,
+		tct.VALUE value 
+		FROM T_COURSE_INFO tci 
+		LEFT JOIN T_COURSE_TYPE tct ON tct.CODE = tci.TYPE
+		WHERE tci.ORGANIZATION_ID = #{organizationId}
+	</select>
+	
+	
+</mapper>

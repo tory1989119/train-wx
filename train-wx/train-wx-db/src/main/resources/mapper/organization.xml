@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.train.wx.db.dao.OrganizationDao">
+	<!-- 插入信息 -->
+	<insert id="insertOrganization" parameterType="OrganizationInfo" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO T_ORGANIZATION_INFO (NAME,TELEPHONE,MOBILEPHONE,ADDRESS,INTRODUCTION,IMG,USERNAME,PASSWORD,CREATE_TIME)
+		VALUES (#{name},#{telephone},#{mobilephone},#{address},#{introduction},#{img},#{username},#{password},NOW())
+	</insert>
+	
+	<!-- 获取详细信息 -->
+	<select id="getOrganizationInfo" parameterType="String" resultType="OrganizationInfo" >
+		SELECT 
+		ID id,
+		NAME name,
+		TELEPHONE telephone,
+		MOBILEPHONE mobilephone,
+		ADDRESS address,
+		INTRODUCTION introduction,
+		IMG img,
+		USERNAME username,
+		PASSWORD password,
+		CREATE_TIME createTime
+		FROM T_ORGANIZATION_INFO
+		WHERE ID = #{id}
+	</select>
+	
+	<!-- 查询列表 -->
+	<select id="queryOrganization" parameterType="SysSearchDto" resultType="OrganizationInfo" >
+		SELECT 
+		ID id,
+		NAME name,
+		TELEPHONE telephone,
+		MOBILEPHONE mobilephone,
+		ADDRESS address,
+		INTRODUCTION introduction,
+		TIMG img,
+		USERNAME username,
+		PASSWORD password,
+		CREATE_TIME createTime
+		FROM T_ORGANIZATION_INFO
+		LIMIT #{begin},#{rows}
+	</select>
+	
+	<!-- 查询列表数 -->
+	<select id="countOrganization" parameterType="SysSearchDto" resultType="int" >
+		SELECT 
+		count(*)
+		FROM T_ORGANIZATION_INFO
+		LIMIT #{begin},#{rows}
+	</select>
+	
+	<!-- 查询教师图片 -->
+	<select id="queryTeacherImg" parameterType="String" resultType="TeacherImg" >
+		SELECT 
+		ID id,
+		NAME name,
+		URL url,
+		CREATE_TIME createTime
+		FROM T_TEACHER_IMG
+		WHERE ORGANIZATION_ID = #{organizationId}
+	</select>
+	
+	<!-- 查询环境图片 -->
+	<select id="queryEnvironmentImg" parameterType="String" resultType="EnvironmentImg" >
+		SELECT 
+		ID id,
+		NAME name,
+		URL url,
+		CREATE_TIME createTime
+		FROM T_ENVIRONMENT_IMG
+		WHERE ORGANIZATION_ID = #{organizationId}
+	</select>
+	
+</mapper>
