@@ -9,6 +9,7 @@
   	<module>train-wx-common</module>
   	<module>train-wx-db</module>
   	<module>train-wx-manager</module>
+  	<module>train-wx-website</module>
   </modules>
   
   <properties>
