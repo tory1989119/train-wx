@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.train.wx.db.dao.AuditionDao">
+	<!-- 插入信息 -->
+	<insert id="insertAudition" parameterType="AuditionInfo" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO T_AUDITION_INFO (NAME,ORGANIZATION_ID,IMG,AGE,ADDRESS,AUDITION_TIME,CREATE_TIME)
+		VALUES (#{name},#{organizationId},#{img},#{age},#{address},#{auditionTime},NOW())
+	</insert>
+	
+	<!-- 查询列表 -->
+	<select id="queryAudition" parameterType="SysSearchDto" resultType="AuditionDto" >
+		SELECT
+		tai.ID id, 
+		tai.NAME name,
+		tai.ORGANIZATION_ID organizationId,
+		tai.IMG img,
+		tai.AGE age,
+		tai.ADDRESS address,
+		date_format(tai.AUDITION_TIME, '%Y-%m-%d %H:%i:%s') auditionTime,
+		tai.CREATE_TIME createTime,
+		toi.NAME organizationName,
+		toi.telephone telephone,
+		toi.headimg headimg
+		FROM T_AUDITION_INFO tai
+		LEFT JOIN T_ORGANIZATION_INFO toi ON toi.ID = tai.ORGANIZATION_ID
+		LIMIT #{begin},#{rows}
+	</select>
+	
+	<!-- 查询列表数 -->
+	<select id="countAudition" parameterType="SysSearchDto" resultType="int" >
+		SELECT
+		COUNT(*)
+		FROM T_AUDITION_INFO
+	</select>
+</mapper>

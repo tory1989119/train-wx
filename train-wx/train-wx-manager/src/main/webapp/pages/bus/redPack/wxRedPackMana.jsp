@@ -174,7 +174,7 @@ function table(data,pageNum){
 		
 		if(data.content[i].status == '0'){
 			str = str + '<td>' + '发送中' + '</td>';
-		}if(data.content[i].status == '1'){
+		}else if(data.content[i].status == '1'){
 			str = str + '<td>' + '发送成功' + '</td>';
 		}else{
 			str = str + '<td>' + '发送失败' + '</td>';

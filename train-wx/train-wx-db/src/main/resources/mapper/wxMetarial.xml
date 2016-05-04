@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.train.wx.db.dao.WxMetarialDao">
-	<!-- 插入信息 -->
+		<!-- 插入信息 -->
 	<insert id="insertWxMetarial" parameterType="WxMetarialInfo" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO WX_METARIAL_INFO (MEDIA_ID,TITLE,THUMB_MEDIA_ID,THUMB_URL,SHOW_COVER_PIC,AUTHOR,DIGEST,CONTENT,URL,CONTENT_SOURCE_URL,UPDATE_TIME,NAME)
-		VALUES (#{mediaId},#{title},#{thumbMediaId},#{thumbUrl},#{showCoverPic},#{author},#{digest},#{content},#{url},#{contentSourceUrl},#{updateTime},#{name})
+		INSERT INTO WX_METARIAL_INFO (MEDIA_ID,TITLE,THUMB_MEDIA_ID,THUMB_URL,SHOW_COVER_PIC,AUTHOR,DIGEST,CONTENT,URL,CONTENT_SOURCE_URL,UPDATE_TIME,NAME,TYPE,STATUS)
+		VALUES (#{mediaId},#{title},#{thumbMediaId},#{thumbUrl},#{showCoverPic},#{author},#{digest},#{content},#{url},#{contentSourceUrl},#{updateTime},#{name},#{type},'0')
 	</insert>
 	
 	<!-- 查询微信用户素材列表 -->
@@ -62,5 +62,37 @@
 	<update id="deleteWxMetarial" parameterType="Long">
 		DELETE FROM WX_METARIAL_INFO WHERE ID = #{id}
 	</update>
+	
+	<!-- 查询微信用户素材列表 -->
+	<select id="queryWxMetarialForComic" parameterType="SysSearchDto" resultType="WxMetarialInfo" >
+		SELECT 
+		wmi1.ID id,
+		wmi1.MEDIA_ID mediaId,
+		wmi1.TITLE title,
+		wmi1.THUMB_MEDIA_ID thumbMediaId,
+		wmi2.URL thumbUrl,
+		wmi1.SHOW_COVER_PIC showCoverPic,
+		wmi1.AUTHOR author,
+		wmi1.DIGEST digest,
+		wmi1.URL url,
+		wmi1.CONTENT_SOURCE_URL contentSourceUrl,
+		date_format(wmi1.UPDATE_TIME, '%Y-%m-%d %H:%i:%s') updateTime,
+		wmi1.NAME name
+		FROM WX_METARIAL_INFO wmi1 LEFT JOIN WX_METARIAL_INFO wmi2 ON wmi1.THUMB_MEDIA_ID = wmi2.MEDIA_ID
+		WHERE wmi1.TYPE = 'news'
+		AND wmi1.STATUS = '1'
+		ORDER BY wmi1.UPDATE_TIME DESC
+		LIMIT #{begin},#{rows}
+	</select>
+	
+	<!-- 查询微信用户素材列表 -->
+	<select id="countWxMetarialForComic" parameterType="SysSearchDto" resultType="int" >
+		SELECT 
+		COUNT(*)
+		FROM WX_METARIAL_INFO wmi1
+		WHERE wmi1.TYPE = 'news'
+		AND wmi1.STATUS = '1'
+	</select>
+	
 	
 </mapper>

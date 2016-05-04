@@ -15,14 +15,14 @@
 	<div class="page-group">
 		<div class="page page-current">
 			<header class="bar bar-nav blue_bg fix-top">
-				<a class="btn-back button-link button-nav pull-left back" href="#">
+				<a class="btn-back button-link button-nav pull-left back" href="<%=request.getContextPath()%>/main/mainPage.do">
 					<span class="icon icon-back"></span>
 				</a>
 				<h1 class="title white_txt">机构详情</h1>
 			</header>
 			<!--底部菜单 注意要放在content的前面-->
 			<nav class="bar bar-tab foot-tabs">
-				<a href="<%=request.getContextPath()%>/main/indexPage.do" class="tab-item external active">
+				<a href="<%=request.getContextPath()%>/main/mainPage.do" class="tab-item external active">
 					<span class="icon icon-tab"></span>
 					<span class="tab-label">首页</span>
 				</a>
@@ -30,14 +30,20 @@
 					<span class="icon icon-tab1"></span>
 					<span class="tab-label">活动表演</span>
 				</a>
+				<a href="<%=request.getContextPath()%>/audition/auditionPage.do" class="tab-item external">
+					<span class="icon icon-tab3"></span>
+					<span class="tab-label">我要试听</span>
+				</a>
 				<a href="<%=request.getContextPath()%>/person/personPage.do" class="tab-item external">
 					<span class="icon icon-tab2"></span>
 					<span class="tab-label">家长中心</span>
 				</a>
+				<!-- 
 				<a href="<%=request.getContextPath()%>/mall/mallPage.do" class="tab-item external">
 					<span class="icon icon-tab3"></span>
 					<span class="tab-label">学具商城</span>
 				</a>
+				 -->
 				<a href="<%=request.getContextPath()%>/welfare/welfarePage.do" class="tab-item external">
 					<span class="icon icon-tab4"></span>
 					<span class="tab-label">福利优惠</span>
@@ -45,18 +51,20 @@
 			</nav>
 			<div class="content native-scroll">
 				<div class="imgbox">
-					<img src="${organizationInfo.img}">
+					<img src="${organizationInfo.bannerimg}">
 				</div>
 				<!---->
-				<div class="agency-name-box white_bg bor_gray_tbcut m_t_cut">
+				<div class="agency-name-box white_bg bor_gray_tbcut m_t_cut rel">
 					<h2 class="icon-vip tit">${organizationInfo.name}</h2>
 					<c:forEach  var="item" items="${courseTypes}">
-						<a class="round-txtbg bg${item.code}">${item.value}</a>
+						<a href="javascript:void(0)" class="round-txtbg bg${item.code}">${item.value}</a>
 					</c:forEach>
+					<a class="btn-navAdress abs" href="http://api.map.baidu.com/marker?location=${organizationInfo.coordinate}&title=${organizationInfo.name}&content=${organizationInfo.name}&output=html">导航</a>
 				</div>
 				<div class="info-box white_bg bor_gray_tcut m_t_cut">
 					<p class="mar_none p_lr_cut font-normal">联系地址：${organizationInfo.address}</p>
-					<a class="mar_none p_lr_cut font-normal">咨询电话:<a href="tel:${organizationInfo.telephone}" class="orange_txt">${organizationInfo.telephone}</a></a>
+					<p class="mar_none p_lr_cut font-normal">咨询电话:<a href="tel:${organizationInfo.telephone}" class="orange_txt">${organizationInfo.telephone}</a></p>
+					
 				</div>
 				<article class="info-box white_bg bor_gray_tbcut">
 					<h2 class="orange_txt t_c font-normal">机构简介</h2>
@@ -80,7 +88,7 @@
 											<div class="ins c_f ">
 												<c:forEach  var="item" items="${teacherImgs}">
 													<div class="item imgbox">
-														<img src="${item.url}" />
+														<img style="width: 80px;height: 80px" src="${item.url}" />
 													</div>
 												</c:forEach>
 											</div>
@@ -97,7 +105,7 @@
 						<c:forEach  var="item" items="${environmentImgs}">
 								<img src="${item.url}" />
 						</c:forEach>
-						<a href="#" class="button button-big button-orange">我要跟TA学习</a>
+						<!-- <a href="#" class="button button-big button-orange">我要跟TA学习</a> -->
 					</div>
 				</section>
 			</div>

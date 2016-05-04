@@ -43,4 +43,17 @@ public interface WxMetarialDao {
 	 * @param id
 	 */
 	public void deleteWxMetarial(Long id);
+	
+	/**
+	 * 查询最新的素材记录
+	 * @param rows
+	 * @return
+	 */
+	public List<WxMetarialInfo> queryWxMetarialForComic(SysSearchDto searchDto);
+	/**
+	 * 查询最新的素材记录
+	 * @param rows
+	 * @return
+	 */
+	public Integer countWxMetarialForComic(SysSearchDto searchDto);
 }

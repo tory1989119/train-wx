@@ -10,7 +10,6 @@ import com.thoughtworks.xstream.XStream;
 import com.train.wx.common.enums.GlobConstants;
 import com.train.wx.common.enums.MsgTypeEnum;
 import com.train.wx.common.enums.WxConsts;
-import com.train.wx.common.utils.EmojiFilter;
 import com.train.wx.common.utils.GsonUtils;
 import com.train.wx.db.dao.WxUserDao;
 import com.train.wx.db.dto.WxMessageDto;
@@ -79,7 +78,19 @@ public class WxCallbackService {
 	 * @return
 	 */
 	public String click(WxMessageDto wm){
-		if("kefu1234".endsWith(wm.getEventKey())){
+		if("kefu-jiazhang".endsWith(wm.getEventKey())){
+			XStream xStream = new XStream();
+			xStream.alias("xml", WxMessageDto.class);
+			WxMessageDto wm1 = new WxMessageDto();
+			wm1.setMsgType(MsgTypeEnum.TEXT.getType());
+			wm1.setToUserName(wm.getFromUserName());
+			wm1.setFromUserName(wm.getToUserName());
+			wm1.setCreateTime(wm.getCreateTime());
+			wm1.setContent("请输入你要咨询的问题，稍后会有客服与你联系，谢谢！");
+			return xStream.toXML(wm1);
+		}
+		
+		if("kefu-jigou".endsWith(wm.getEventKey())){
 			XStream xStream = new XStream();
 			xStream.alias("xml", WxMessageDto.class);
 			WxMessageDto wm1 = new WxMessageDto();

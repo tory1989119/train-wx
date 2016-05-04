@@ -23,16 +23,29 @@
 		
 		<typeAlias alias="BannerInfo" type="com.train.wx.db.model.BannerInfo"/>
 		<typeAlias alias="HotCourseInfo" type="com.train.wx.db.model.HotCourseInfo"/>
+		<typeAlias alias="HotOrganizationInfo" type="com.train.wx.db.model.HotOrganizationInfo"/>
 		<typeAlias alias="OrganizationInfo" type="com.train.wx.db.model.OrganizationInfo"/>
 		<typeAlias alias="CourseInfo" type="com.train.wx.db.model.CourseInfo"/>
-		<typeAlias alias="TuitionInfo" type="com.train.wx.db.model.TuitionInfo"/>
+		<typeAlias alias="ActivityInfo" type="com.train.wx.db.model.ActivityInfo"/>
+		<typeAlias alias="AuditionInfo" type="com.train.wx.db.model.AuditionInfo"/>
+		<typeAlias alias="VoucherInfo" type="com.train.wx.db.model.VoucherInfo"/>
+		<typeAlias alias="UserInfo" type="com.train.wx.db.model.UserInfo"/>
 		
 		<typeAlias alias="CourseImg" type="com.train.wx.db.model.CourseImg"/>
 		<typeAlias alias="EnvironmentImg" type="com.train.wx.db.model.EnvironmentImg"/>
 		<typeAlias alias="TeacherImg" type="com.train.wx.db.model.TeacherImg"/>
 		
+		<typeAlias alias="VoucherLog" type="com.train.wx.db.model.VoucherLog"/>
+		
 		<typeAlias alias="CourseType" type="com.train.wx.db.model.CourseType"/>
 		
 		<typeAlias alias="HotCourseDto" type="com.train.wx.db.dto.HotCourseDto"/>
+		<typeAlias alias="HotOrganizationDto" type="com.train.wx.db.dto.HotOrganizationDto"/>
+		<typeAlias alias="ActivityDto" type="com.train.wx.db.dto.ActivityDto"/>
+		<typeAlias alias="AuditionDto" type="com.train.wx.db.dto.AuditionDto"/>
+		<typeAlias alias="VoucherDto" type="com.train.wx.db.dto.VoucherDto"/>
+		<typeAlias alias="CourseDto" type="com.train.wx.db.dto.CourseDto"/>
+		<typeAlias alias="UserDto" type="com.train.wx.db.dto.UserDto"/>
+		
 	</typeAliases>
 </configuration>

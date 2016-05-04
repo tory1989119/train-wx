@@ -15,14 +15,14 @@
 	<div class="page-group">
 		<div class="page page-current">
 			<header class="bar bar-nav blue_bg fix-top">
-				<a class="btn-back button-link button-nav pull-left back" href="#">
+				<a class="btn-back button-link button-nav pull-left back" href="<%=request.getContextPath()%>/main/mainPage.do">
 					<span class="icon icon-back"></span>
 				</a>
-				<h1 class="title white_txt">${organizationInfo.name}[${courseInfo.name}]</h1>
+				<h1 class="title white_txt">${courseDto.organizationName}[${courseDto.name}]</h1>
 			</header>
 			<!--底部菜单 注意要放在content的前面-->
 			<nav class="bar bar-tab foot-tabs">
-				<a href="<%=request.getContextPath()%>/main/indexPage.do" class="tab-item external active">
+				<a href="<%=request.getContextPath()%>/main/mainPage.do" class="tab-item external active">
 					<span class="icon icon-tab"></span>
 					<span class="tab-label">首页</span>
 				</a>
@@ -30,14 +30,20 @@
 					<span class="icon icon-tab1"></span>
 					<span class="tab-label">活动表演</span>
 				</a>
+				<a href="<%=request.getContextPath()%>/audition/auditionPage.do" class="tab-item external">
+					<span class="icon icon-tab3"></span>
+					<span class="tab-label">我要试听</span>
+				</a>
 				<a href="<%=request.getContextPath()%>/person/personPage.do" class="tab-item external">
 					<span class="icon icon-tab2"></span>
 					<span class="tab-label">家长中心</span>
 				</a>
+				<!-- 
 				<a href="<%=request.getContextPath()%>/mall/mallPage.do" class="tab-item external">
 					<span class="icon icon-tab3"></span>
 					<span class="tab-label">学具商城</span>
 				</a>
+				 -->
 				<a href="<%=request.getContextPath()%>/welfare/welfarePage.do" class="tab-item external">
 					<span class="icon icon-tab4"></span>
 					<span class="tab-label">福利优惠</span>
@@ -45,40 +51,25 @@
 			</nav>
 			<div class="content native-scroll">
 				<div class="imgbox">
-					<img src="${courseInfo.img}">
+					<img src="${courseDto.bannerimg}">
+				</div>
+				<div class="agency-name-box white_bg bor_gray_tbcut m_t_cut">
+					<h2 class="icon-vip tit"><a href="<%=request.getContextPath()%>/organization/organizationPage.do?id=${courseDto.organizationId}">${courseDto.organizationName}</a></h2>
 				</div>
 				<!---->
 				<section class="info-box white_bg">
 					<h2 class="tit_orange">课程介绍</h2>
 					<div class="txtbox-p sub-txt">
-						<p>适龄建议：${courseInfo.age}岁以上</p>
-						<p>教学内容：${courseInfo.content}</p>
-						<p>教学特色：${courseInfo.feature}</p>
+						<p>适龄建议：${courseDto.age}</p>
+						<p>教学内容：${courseDto.content}</p>
+						<p>教学特色：${courseDto.feature}</p>
 					</div>
 				</section>
 				<section class="info-box white_bg">
 					<h2 class="tit_orange">课程费用</h2>
-					<div class="m-table">
-						<table>
-							<tbody>
-								<tr>
-									<th><span>适合对象</span></th>
-									<th><span>上课时段</span></th>
-									<th><span>季度课时</span></th>
-									<th><span>课程单价</span></th>
-									<th><span>课程总价</span></th>
-								</tr>
-								<c:forEach var="item" items="${tuitionInfos}">
-									<tr>
-										<td><span>${item.age}</span></td>
-										<td><span>${item.classTime}</span></td>
-										<td><span>${item.quarterHour}</span></td>
-										<td><span>${item.price}</span></td>
-										<td><span>${item.total}</span></td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
+					<div class="txtbox-p sub-txt">
+						<p>教学时间：${courseDto.classTime}</p>
+						<p>教学费用：${courseDto.price}</p>
 					</div>
 				</section>
 				<section class="info-box white_bg">
@@ -87,7 +78,9 @@
 						<c:forEach  var="item" items="${courseImgs}">
 								<img src="${item.url}" />
 						</c:forEach>
-						<a href="index3.html" class="button button-big button-orange">我要跟TA学习</a>
+						<c:if test="${courseDto.voucherId != null && courseDto.voucherId != ''}">
+							<a href="<%=request.getContextPath()%>/welfare/getVoucherInfo.do?id=${courseDto.voucherId}" class="button button-big button-orange">我要优惠券</a>
+						</c:if>
 					</div>
 				</section>
 			</div>

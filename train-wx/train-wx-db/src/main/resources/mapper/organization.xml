@@ -4,20 +4,23 @@
 <mapper namespace="com.train.wx.db.dao.OrganizationDao">
 	<!-- 插入信息 -->
 	<insert id="insertOrganization" parameterType="OrganizationInfo" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO T_ORGANIZATION_INFO (NAME,TELEPHONE,MOBILEPHONE,ADDRESS,INTRODUCTION,IMG,USERNAME,PASSWORD,CREATE_TIME)
-		VALUES (#{name},#{telephone},#{mobilephone},#{address},#{introduction},#{img},#{username},#{password},NOW())
+		INSERT INTO T_ORGANIZATION_INFO (HEADIMG,NAME,TELEPHONE,MOBILEPHONE,ADDRESS,INTRODUCTION,BANNERIMG,USERNAME,PASSWORD,AREA_CODE,COORDINATE,CREATE_TIME)
+		VALUES (#{headimg},#{name},#{telephone},#{mobilephone},#{address},#{introduction},#{bannerimg},#{username},#{password},#{areaCode},#{coordinate},NOW())
 	</insert>
 	
 	<!-- 获取详细信息 -->
 	<select id="getOrganizationInfo" parameterType="String" resultType="OrganizationInfo" >
 		SELECT 
 		ID id,
+		HEADIMG headimg,
 		NAME name,
+		COORDINATE coordinate,
 		TELEPHONE telephone,
 		MOBILEPHONE mobilephone,
 		ADDRESS address,
 		INTRODUCTION introduction,
-		IMG img,
+		BANNERIMG bannerimg,
+		AREA_CODE areaCode,
 		USERNAME username,
 		PASSWORD password,
 		CREATE_TIME createTime
@@ -29,12 +32,15 @@
 	<select id="queryOrganization" parameterType="SysSearchDto" resultType="OrganizationInfo" >
 		SELECT 
 		ID id,
+		HEADIMG headimg,
 		NAME name,
+		AREA_CODE areaCode,
+		COORDINATE coordinate,
 		TELEPHONE telephone,
 		MOBILEPHONE mobilephone,
 		ADDRESS address,
 		INTRODUCTION introduction,
-		TIMG img,
+		BANNERIMG bannerimg,
 		USERNAME username,
 		PASSWORD password,
 		CREATE_TIME createTime

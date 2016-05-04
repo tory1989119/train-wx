@@ -9,7 +9,7 @@ package com.train.wx.db.model;
 public class HotCourseInfo {
 	private Long id;
 	private String type;
-	private Long tuitionId;
+	private Long courseId;
 	private Integer readNum;
 	private Integer likeNum;
 	private String createTime;
@@ -22,12 +22,12 @@ public class HotCourseInfo {
 		this.id = id;
 	}
 
-	public Long getTuitionId() {
-		return tuitionId;
+	public Long getCourseId() {
+		return courseId;
 	}
 
-	public void setTuitionId(Long tuitionId) {
-		this.tuitionId = tuitionId;
+	public void setCourseId(Long courseId) {
+		this.courseId = courseId;
 	}
 
 	public Integer getReadNum() {

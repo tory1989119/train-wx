@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.train.wx.db.dao.ActivityDao">
+	<!-- 插入信息 -->
+	<insert id="insertActivity" parameterType="ActivityInfo" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO T_ACTIVITY_INFO (NAME,ORGANIZATION_ID,CHARGE_TYPE,IMG,AGE,ADDRESS,ACTIVITY_TIME,CREATE_TIME)
+		VALUES (#{name},#{organizationId},#{chargeType},#{img},#{age},#{address},#{activityTime},NOW())
+	</insert>
+	
+	<!-- 查询列表 -->
+	<select id="queryActivity" parameterType="SysSearchDto" resultType="ActivityDto" >
+		SELECT
+		tai.ID id, 
+		tai.NAME name,
+		tai.ORGANIZATION_ID organizationId,
+		tai.CHARGE_TYPE chargeType,
+		tai.IMG img,
+		tai.AGE age,
+		tai.ADDRESS address,
+		date_format(tai.ACTIVITY_TIME, '%Y-%m-%d %H:%i:%s') activityTime,
+		tai.CREATE_TIME createTime,
+		toi.NAME organizationName,
+		toi.telephone telephone,
+		toi.headimg headimg
+		FROM T_ACTIVITY_INFO tai
+		LEFT JOIN T_ORGANIZATION_INFO toi ON toi.ID = tai.ORGANIZATION_ID
+		LIMIT #{begin},#{rows}
+	</select>
+	
+	<!-- 查询列表数 -->
+	<select id="countActivity" parameterType="SysSearchDto" resultType="int" >
+		SELECT
+		COUNT(*)
+		FROM T_ACTIVITY_INFO
+	</select>
+</mapper>

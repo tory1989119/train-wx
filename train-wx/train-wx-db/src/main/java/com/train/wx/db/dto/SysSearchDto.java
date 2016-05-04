@@ -29,15 +29,6 @@ public class SysSearchDto {
 	private String openid;
 	
 	/**
-	 * organizationId
-	 */
-	private String organizationId;
-	
-	/**
-	 * courseId
-	 */
-	private String courseId;
-	/**
 	 * 页数
 	 */
 	private Integer begin;
@@ -114,21 +105,4 @@ public class SysSearchDto {
 	public void setRows(Integer rows) {
 		this.rows = rows;
 	}
-
-	public String getOrganizationId() {
-		return organizationId;
-	}
-
-	public void setOrganizationId(String organizationId) {
-		this.organizationId = organizationId;
-	}
-
-	public String getCourseId() {
-		return courseId;
-	}
-
-	public void setCourseId(String courseId) {
-		this.courseId = courseId;
-	}
-
 }

@@ -9,12 +9,15 @@ package com.train.wx.db.model;
 public class CourseInfo {
 	private Long id;
 	private Long organizationId;//
-	private String img;// 首页图片
+	private String headimg;
+	private String bannerimg;// 首页图片
 	private String type;// 类型
 	private String name;// 课程名称
 	private String age;// 适宜年龄
 	private String content;// 内容
 	private String feature;// 特色
+	private String classTime;// 上课时间
+	private String price;//价格
 	private String createTime;// 创建时间
 
 	public Long getId() {
@@ -81,11 +84,35 @@ public class CourseInfo {
 		this.createTime = createTime;
 	}
 
-	public String getImg() {
-		return img;
+	public String getBannerimg() {
+		return bannerimg;
 	}
 
-	public void setImg(String img) {
-		this.img = img;
+	public void setBannerimg(String bannerimg) {
+		this.bannerimg = bannerimg;
+	}
+
+	public String getClassTime() {
+		return classTime;
+	}
+
+	public void setClassTime(String classTime) {
+		this.classTime = classTime;
+	}
+
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
+	public String getHeadimg() {
+		return headimg;
+	}
+
+	public void setHeadimg(String headimg) {
+		this.headimg = headimg;
 	}
 }

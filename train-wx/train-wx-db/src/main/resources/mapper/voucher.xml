@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.train.wx.db.dao.VoucherDao">
+	<!-- 插入信息 -->
+	<insert id="insertVoucher" parameterType="VoucherInfo" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO T_VOUCHER_INFO (ORGANIZATION_ID,COURSE_ID,TYPE,CONTENT,START_TIME,END_TIME,PRICE,INTRODUCE，CREATE_TIME)
+		VALUES (#{organizationId},#{courseId},#{type},#{content},#{startTime},#{endTime},#{price},#{introduce},NOW())
+	</insert>
+	
+	<!-- 插入信息 -->
+	<insert id="insertVoucherLog" parameterType="VoucherLog" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO T_VOUCHER_LOG (VOUCHER_ID,ORGANIZATION_ID,COURSE_ID,USER_ID,TYPE,CONTENT,START_TIME,END_TIME,USE_TIME,STATUS,PRICE,CREATE_TIME)
+		VALUES (#{voucherId},#{organizationId},#{courseId},#{userId},#{type},#{content},#{startTime},#{endTime},#{useTime},'0',#{price},NOW())
+	</insert>
+	
+	<!-- 查询详情 -->
+	<select id="getVoucherInfo" parameterType="String" resultType="VoucherInfo" >
+		SELECT
+		ID id, 
+		ORGANIZATION_ID organizationId,
+		COURSE_ID courseId,
+		TYPE type,
+		CONTENT content,
+		date_format(START_TIME, '%Y-%m-%d %H:%i:%s') startTime,
+		date_format(END_TIME, '%Y-%m-%d %H:%i:%s') endTime,
+		PRICE price,
+		date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') createTime
+		FROM T_VOUCHER_INFO
+		WHERE ID = #{id}
+	</select>
+	
+	<!-- 查询列表 -->
+	<select id="queryVoucher" parameterType="VoucherDto" resultType="VoucherDto" >
+		SELECT
+		tvi.ID id, 
+		tvi.ORGANIZATION_ID organizationId,
+		tvi.COURSE_ID courseId,
+		tvi.TYPE type,
+		tvi.CONTENT content,
+		date_format(tvi.START_TIME, '%Y-%m-%d') startTime,
+		date_format(tvi.END_TIME, '%Y-%m-%d') endTime,
+		tvi.PRICE price,
+		date_format(tvi.CREATE_TIME, '%Y-%m-%d %H:%i:%s') createTime,
+		toi.NAME organizationName,
+		toi.ADDRESS address,
+		tci.HEADIMG headimg,
+		tci.Name courseName
+		FROM T_VOUCHER_INFO tvi
+		LEFT JOIN T_ORGANIZATION_INFO toi ON toi.ID = tvi.ORGANIZATION_ID
+		LEFT JOIN T_COURSE_INFO tci ON tci.ID = tvi.COURSE_ID
+		
+		<if test="courseName != null and courseName != ''">
+			WHERE tci.NAME LIKE CONCAT('%',#{courseName},'%')
+		</if>
+		
+		LIMIT #{begin},#{rows}
+	</select>
+	
+	<!-- 查询列表数 -->
+	<select id="countVoucher" parameterType="VoucherDto" resultType="int" >
+		SELECT
+		COUNT(*)
+		FROM T_VOUCHER_INFO tvi
+		LEFT JOIN T_COURSE_INFO tci ON tci.ID = tvi.COURSE_ID
+		
+		<if test="courseName != null and courseName != ''">
+			WHERE tci.NAME LIKE CONCAT('%',#{courseName},'%')
+		</if>
+	</select>
+	
+	<!-- 查询列表 -->
+	<select id="queryVoucherLog" parameterType="VoucherDto" resultType="VoucherDto" >
+		SELECT
+		tvl.ID id, 
+		tvl.VOUCHER_ID voucherId,
+		tvl.ORGANIZATION_ID organizationId,
+		tvl.COURSE_ID courseId,
+		tvl.USER_ID userId,
+		tvl.TYPE type,
+		tvl.CONTENT content,
+		date_format(tvl.START_TIME, '%Y-%m-%d') startTime,
+		date_format(tvl.END_TIME, '%Y-%m-%d') endTime,
+		date_format(tvl.USE_TIME, '%Y-%m-%d %H:%i:%s') useTime,
+		tvl.STATUS status,
+		tvl.PRICE price,
+		date_format(tvl.CREATE_TIME, '%Y-%m-%d %H:%i:%s') createTime,
+		toi.NAME organizationName,
+		toi.ADDRESS address,
+		tci.HEADIMG headimg,
+		tci.Name courseName
+		FROM T_VOUCHER_LOG tvl
+		LEFT JOIN T_ORGANIZATION_INFO toi ON toi.ID = tvl.ORGANIZATION_ID
+		LEFT JOIN T_COURSE_INFO tci ON tci.ID = tvl.COURSE_ID
+		WHERE tvl.USER_ID = #{userId}
+		LIMIT #{begin},#{rows}
+	</select>
+	
+	<!-- 查询列表数 -->
+	<select id="countVoucherLog" parameterType="VoucherDto" resultType="int" >
+		SELECT
+		COUNT(*)
+		FROM T_VOUCHER_LOG
+		WHERE USER_ID = #{userId}
+		<if test="voucherId != null and voucherId != ''"> AND VOUCHER_ID = #{voucherId}</if>
+	</select>
+	
+	<!-- 使用券 -->
+	<update id="useVoucher" parameterType="String">
+		UPDATE T_VOUCHER_LOG SET STATUS = '1' , USE_TIME = NOW() WHERE ID = #{id}
+	</update>
+	
+	<!-- 查询列表 -->
+	<select id="getVoucherDto" parameterType="String" resultType="VoucherDto" >
+		SELECT
+		tvi.ID id, 
+		tvi.ORGANIZATION_ID organizationId,
+		tvi.COURSE_ID courseId,
+		tvi.TYPE type,
+		tvi.CONTENT content,
+		tvi.INTRODUCE introduce,
+		date_format(tvi.START_TIME, '%Y-%m-%d') startTime,
+		date_format(tvi.END_TIME, '%Y-%m-%d') endTime,
+		tvi.PRICE price,
+		date_format(tvi.CREATE_TIME, '%Y-%m-%d %H:%i:%s') createTime,
+		toi.NAME organizationName,
+		toi.ADDRESS address,
+		tci.HEADIMG headimg,
+		tci.Name courseName
+		FROM T_VOUCHER_INFO tvi
+		LEFT JOIN T_ORGANIZATION_INFO toi ON toi.ID = tvi.ORGANIZATION_ID
+		LEFT JOIN T_COURSE_INFO tci ON tci.ID = tvi.COURSE_ID
+		WHERE tvi.ID = #{id}
+	</select>
+</mapper>

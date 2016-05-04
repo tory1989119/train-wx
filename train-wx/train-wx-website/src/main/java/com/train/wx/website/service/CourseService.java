@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.train.wx.db.dao.CourseDao;
 import com.train.wx.db.dto.BaseResponseDto;
+import com.train.wx.db.dto.CourseDto;
 import com.train.wx.db.dto.SysSearchDto;
 import com.train.wx.db.model.CourseImg;
 import com.train.wx.db.model.CourseInfo;
@@ -24,11 +25,7 @@ public class CourseService {
 	 * @return
 	 */
 	public List<CourseInfo> queryCourse(String organizationId){
-		SysSearchDto searchDto = new SysSearchDto();
-		searchDto.setBegin(0);
-		searchDto.setRows(100);
-		searchDto.setOrganizationId(organizationId);
-		return courseDao.queryCourse(searchDto);
+		return courseDao.queryCourseByOrganizationId(organizationId);
 	}
 	
 	/**
@@ -44,12 +41,33 @@ public class CourseService {
 	}
 	
 	/**
+	 * 查询列表
+	 * @param courseDto
+	 * @return
+	 */
+	public BaseResponseDto<Object> queryCourses(CourseDto courseDto){
+		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
+		br.setContent(courseDao.queryCourses(courseDto));
+		br.setPageCount(courseDao.countCourses(courseDto));
+		return br;
+	}
+	
+	/**
 	 * 查询课程详情
 	 * @param id
 	 * @return
 	 */
 	public CourseInfo getCourseInfo(String id){
 		return courseDao.getCourseInfo(id);
+	}
+	
+	/**
+	 * 查询详细信息
+	 * @param id
+	 * @return
+	 */
+	public CourseDto getCourseInfoByVoucher(String id){
+		return courseDao.getCourseInfoByVoucher(id);
 	}
 	
 	/**

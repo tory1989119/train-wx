@@ -890,6 +890,55 @@ h2.tit_orange:before{
   min-width: 2.6rem;
   text-align: center;
 }
+/*2016-3-23 新加 弹出层*/
+.markbox{
+  position:fixed;
+  top:4.3rem;
+  left:0;
+  right:0;
+  bottom:0;
+  background-color: rgba(0,0,0,0.7);
+  z-index: 9999;
+  display:none;
+}
+.markbox .classesbox{
+  width:100%;
+  background-color: #fff;
+  padding: 0.8rem 1rem;
+  font-size:0;
+}
+.classesbox .in_01 .list{
+  display:inline-block;
+  margin-bottom: 0.8rem;
+  margin-right: 0.8rem;
+}
+.classesbox .in_01 .list .btn_c{
+    padding: 0.2rem 1em;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 0.65rem;
+    display: block;
+}
+.classesbox .in_01 .list .btn_c.on{
+  background-color: #ff5a00;
+  color:#fff;
+  border:1px solid #ff5a00;
+}
+/*2016-3-24 新加导航按钮*/
+.btn-navAdress.abs{
+  right: 1rem;
+  top: 50%;
+  height: 1.6rem;
+  line-height: 1.6rem;
+  margin-top: -0.8rem;
+  color: #666;
+  background: url(../images/icon06.png) 0.4rem center no-repeat;
+  background-size: 26%;
+  padding: 0 0.6rem;
+  padding-left: 1.2rem;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
 /*取消滚动条*/
 .cansel_scrollbar::-webkit-scrollbar              { /* 1 */  width:0px; background-color:rgba(0,0,0,0);}
 .cansel_scrollbar::-webkit-scrollbar-button       { /* 2 */ }

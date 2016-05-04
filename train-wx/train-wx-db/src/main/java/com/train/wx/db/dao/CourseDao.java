@@ -2,11 +2,11 @@ package com.train.wx.db.dao;
 
 import java.util.List;
 
+import com.train.wx.db.dto.CourseDto;
 import com.train.wx.db.dto.SysSearchDto;
 import com.train.wx.db.model.CourseImg;
 import com.train.wx.db.model.CourseInfo;
 import com.train.wx.db.model.CourseType;
-import com.train.wx.db.model.TeacherImg;
 
 public interface CourseDao {
 	/**
@@ -21,6 +21,13 @@ public interface CourseDao {
 	 * @return
 	 */
 	public CourseInfo getCourseInfo(String id);
+	
+	/**
+	 * 查询详细信息
+	 * @param id
+	 * @return
+	 */
+	public CourseDto getCourseInfoByVoucher(String id);
 	
 	/**
 	 * 查询列表
@@ -49,4 +56,25 @@ public interface CourseDao {
 	 * @return
 	 */
 	public List<CourseType> queryCourseType(String organizationId);
+	
+	/**
+	 * 查询列表
+	 * @param searchDto
+	 * @return
+	 */
+	public List<CourseInfo> queryCourseByOrganizationId(String organizationId);
+	
+	/**
+	 * 查询列表
+	 * @param searchDto
+	 * @return
+	 */
+	public List<CourseDto> queryCourses(CourseDto courseDto);
+	
+	/**
+	 * 查询列表数
+	 * @param courseDto
+	 * @return
+	 */
+	public Integer countCourses(CourseDto courseDto);
 }

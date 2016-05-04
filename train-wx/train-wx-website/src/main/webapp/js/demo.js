@@ -1,3 +1,6 @@
+$(function(){
+    showMark();
+});
 //公告滚动
 /*var ew = $('#e').width();
 //$('#d').width(ew*2);
@@ -32,5 +35,35 @@ $("[data-addnum]").each(function(){
             });
         }
 
+    });
+});
+
+//2016-3-23点击条目出现弹出层显示对应内容，以data-属性为查找器
+function showMark(){
+            var btnShowMark =$("a[data-showmarkbox]");
+            var markBoxLi =$("#markBox div[data-showmarkbox]");
+            btnShowMark.each(function(){
+                           $(this).click(function(){
+                     var thisData =$(this).data("showmarkbox");
+                     for(var i=0;i<markBoxLi.length;i++){
+                        $(markBoxLi[i]).hide();
+                                 var markBoxLiData =$(markBoxLi[i]).data("showmarkbox");
+                                 if(thisData==markBoxLiData){
+                                                                $(markBoxLi[i]).data("showmarkbox",markBoxLiData).show();
+                                                                $(markBoxLi[i]).data("showmarkbox",markBoxLiData).parents("#markBox").show();
+                                                   }
+                                        }
+        });
+            });
+}
+
+$("div[data-showmarkbox=selectAdress]").find(".btn_c").each(function(){
+    $(this).click(function(){
+        $(this).addClass("on");
+        var otherBtnC=$(this).parent("li").siblings('li').children('.btn_c');
+        if(otherBtnC.hasClass('on')){
+            otherBtnC.removeClass('on');
+        }
+        $("#markBox").hide(200);
     });
 });

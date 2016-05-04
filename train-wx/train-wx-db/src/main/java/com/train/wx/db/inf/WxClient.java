@@ -38,10 +38,21 @@ public class WxClient {
 	 * @param code
 	 * @return
 	 */
-	public JsonObject authorize(String grant_type,String appid,String secret,String code){
-		String url = String.format( WxConsts.WY_TOKEN_QUERY_URL, appid,secret,code,grant_type);
+	public JsonObject getOpenidByCode(String grant_type,String appid,String secret,String code){
+		String url = String.format( WxConsts.GET_OPENID_URL, appid,secret,code,grant_type);
 		JsonObject jo = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), JsonObject.class,true);
 		return jo;
+	}
+	
+	/**
+	 * 获取访问微信端获取openid的url
+	 * @param appid
+	 * @param redirect_uri
+	 * @param scope
+	 * @return
+	 */
+	public String getRequestWxUrl(String appid,String redirect_uri,String scope,String state){
+		return String.format( WxConsts.REQUST_WX_URL, appid,redirect_uri,scope,state);
 	}
 	
 	/**
@@ -180,9 +191,9 @@ public class WxClient {
 	 * @param begin
 	 * @return
 	 */
-	public JsonObject metarialQuery(Integer begin){
+	public JsonObject metarialQuery(String type,Integer begin){
 		String url = String.format(WxConsts.METARIAL_QUERY_URL, AccessTokenDto.getAccess_token());
-		JsonObject jo = GsonUtils.fromJson(HttpClientUtils.post(url,"{\"type\":\"news\",\"offset\":" + begin + ",\"count\":20}", "UTF-8"), JsonObject.class,true);
+		JsonObject jo = GsonUtils.fromJson(HttpClientUtils.post(url,"{\"type\":\"" + type + "\",\"offset\":" + begin + ",\"count\":20}", "UTF-8"), JsonObject.class,true);
 		return jo;
 	}
 	

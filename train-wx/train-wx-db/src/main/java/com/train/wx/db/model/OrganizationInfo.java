@@ -8,15 +8,26 @@ package com.train.wx.db.model;
  */
 public class OrganizationInfo {
 	private Long id;
+	private String headimg;//头像
 	private String name;// 机构名称
 	private String telephone;// 电话
 	private String mobilephone;// 手机
 	private String address;// 地址
 	private String introduction;// 简介
-	private String img;// 首页图片
+	private String bannerimg;// 首页图片
 	private String username;// 账号
 	private String password;// 密码
+	private String areaCode;// 地区编码
 	private String createTime;// 创建时间
+	private String coordinate;//坐标
+
+	public String getHeadimg() {
+		return headimg;
+	}
+
+	public void setHeadimg(String headimg) {
+		this.headimg = headimg;
+	}
 
 	public Long getId() {
 		return id;
@@ -90,11 +101,27 @@ public class OrganizationInfo {
 		this.createTime = createTime;
 	}
 
-	public String getImg() {
-		return img;
+	public String getBannerimg() {
+		return bannerimg;
 	}
 
-	public void setImg(String img) {
-		this.img = img;
+	public void setBannerimg(String bannerimg) {
+		this.bannerimg = bannerimg;
+	}
+
+	public String getAreaCode() {
+		return areaCode;
+	}
+
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
+	}
+
+	public String getCoordinate() {
+		return coordinate;
+	}
+
+	public void setCoordinate(String coordinate) {
+		this.coordinate = coordinate;
 	}
 }

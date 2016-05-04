@@ -11,12 +11,11 @@ public class HotCourseDto{
 	private String type;
 	private Long courseId;
 	private Long organizationId;
-	private Long tuitionId;
 	private Integer readNum;
 	private Integer likeNum;
 	private String createTime;
-	private String url;
-	private Double price;
+	private String headimg;
+	private String price;
 	private String courseName;
 	private String organizationName;
 	public Long getId() {
@@ -37,12 +36,6 @@ public class HotCourseDto{
 	public void setOrganizationId(Long organizationId) {
 		this.organizationId = organizationId;
 	}
-	public Long getTuitionId() {
-		return tuitionId;
-	}
-	public void setTuitionId(Long tuitionId) {
-		this.tuitionId = tuitionId;
-	}
 	public Integer getReadNum() {
 		return readNum;
 	}
@@ -61,10 +54,10 @@ public class HotCourseDto{
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
-	public Double getPrice() {
+	public String getPrice() {
 		return price;
 	}
-	public void setPrice(Double price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 	public String getCourseName() {
@@ -85,10 +78,10 @@ public class HotCourseDto{
 	public void setType(String type) {
 		this.type = type;
 	}
-	public String getUrl() {
-		return url;
+	public String getHeadimg() {
+		return headimg;
 	}
-	public void setUrl(String url) {
-		this.url = url;
+	public void setHeadimg(String headimg) {
+		this.headimg = headimg;
 	}
 }

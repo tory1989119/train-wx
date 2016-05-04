@@ -956,7 +956,7 @@ Device/OS Detection
         var unsupportedType = ['date', 'time', 'month'];
         if(unsupportedType.indexOf(event.target.type) !== -1){
             return false;
-           }
+         }
         // Reset to prevent wrong click cancel on input (issue #156).
         this.cancelNextClick = false;
 

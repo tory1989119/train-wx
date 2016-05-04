@@ -7,13 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.train.wx.website.service.IndexService;
+import com.train.wx.website.service.MainService;
 
 @Controller
 @RequestMapping("/mall")
 public class MallController {
 	@Autowired
-	private IndexService indexService;
+	private MainService indexService;
 	
 	private Logger logger = LoggerFactory.getLogger(MallController.class);
 

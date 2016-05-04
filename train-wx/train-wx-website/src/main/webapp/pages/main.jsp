@@ -21,15 +21,15 @@
 							<i class="icon_search imgbox">
 								<img src="<%=request.getContextPath()%>/images/img_03.png" />
 							</i>
-							<input type="text" class="search_input" id="search_input" placeholder="请输入课程名" required="">	
+							<input type="text" class="search_input" id="courseName" placeholder="请输入课程名" required="">	
 						</div>
 					</div>
-					<a href="javascript:" class="search_cancel" id="search_cancel">搜索</a>
+					<a href="javascript:void(0)" class="search_cancel" id="search_cancel" onclick="searchCourse();">搜索</a>
 				</div>
 			</header>
 			<!--底部菜单 注意要放在content的前面-->
 			<nav class="bar bar-tab foot-tabs">
-				<a href="<%=request.getContextPath()%>/main/indexPage.do" class="tab-item external active">
+				<a href="<%=request.getContextPath()%>/main/mainPage.do" class="tab-item external active">
 					<span class="icon icon-tab"></span>
 					<span class="tab-label">首页</span>
 				</a>
@@ -37,14 +37,20 @@
 					<span class="icon icon-tab1"></span>
 					<span class="tab-label">活动表演</span>
 				</a>
+				<a href="<%=request.getContextPath()%>/audition/auditionPage.do" class="tab-item external">
+					<span class="icon icon-tab3"></span>
+					<span class="tab-label">我要试听</span>
+				</a>
 				<a href="<%=request.getContextPath()%>/person/personPage.do" class="tab-item external">
 					<span class="icon icon-tab2"></span>
 					<span class="tab-label">家长中心</span>
 				</a>
+				<!-- 
 				<a href="<%=request.getContextPath()%>/mall/mallPage.do" class="tab-item external">
 					<span class="icon icon-tab3"></span>
 					<span class="tab-label">学具商城</span>
 				</a>
+				 -->
 				<a href="<%=request.getContextPath()%>/welfare/welfarePage.do" class="tab-item external">
 					<span class="icon icon-tab4"></span>
 					<span class="tab-label">福利优惠</span>
@@ -56,7 +62,9 @@
 						  <div class="swiper-wrapper">
 						  		<c:forEach  var="item" items="${banners}">
 							  		<div class="swiper-slide blue-slide">
-								    	<a href="${item.linkUrl}"><img src="${item.pictureUrl}"></a>
+								    	<!--<a href="${item.linkUrl}">-->
+								    		<img src="${item.pictureUrl}">
+								    	<!--</a>-->
 								    </div>
 						  		</c:forEach>
 						  </div>
@@ -64,6 +72,9 @@
 						  <div class="swiper-pagination"></div>
 					</div>
 				</section>
+				<div class="noticebox">
+					<div class="txt orange_txt" id="scrollobj">一个班将于4月10日正式上线。欢迎各机构入驻，欢迎家长拍砖。</div>
+				</div>
 				<!--8个icon入口-->
 				<section class="white_bg m_t_cut bor_gray_tbcut">
 					<div class="swiper-container2 hidden">
@@ -72,7 +83,7 @@
 							    	<section class="icons_enter_box">
 									<ul>
 										<li class="list">
-											<a href="index2.html">
+											<a href="<%=request.getContextPath()%>/course/searchPage.do">
 												<span class="iconbox">
 													<img src="<%=request.getContextPath()%>/images/img_10.png" />
 												</span>
@@ -80,15 +91,15 @@
 											</a>
 										</li>
 										<li class="list">
-											<a href="#">
+											<a href="<%=request.getContextPath()%>/course/searchPage.do?type=1">
 												<span class="iconbox">
 													<img src="<%=request.getContextPath()%>/images/img_12.png" />
 												</span>
-												<span class="dis">学科</span>
+												<span class="dis">其它</span>
 											</a>
 										</li>
 										<li class="list">
-											<a href="#">
+											<a href="<%=request.getContextPath()%>/course/searchPage.do?type=2">
 												<span class="iconbox">
 													<img src="<%=request.getContextPath()%>/images/img_14.png" />
 												</span>
@@ -96,7 +107,7 @@
 											</a>
 										</li>
 										<li class="list">
-											<a href="#">
+											<a href="<%=request.getContextPath()%>/course/searchPage.do?type=3">
 												<span class="iconbox">
 													<img src="<%=request.getContextPath()%>/images/img_16.png" />
 												</span>
@@ -104,7 +115,7 @@
 											</a>
 										</li>
 										<li class="list">
-											<a href="#">
+											<a href="<%=request.getContextPath()%>/course/searchPage.do?type=4">
 												<span class="iconbox">
 													<img src="<%=request.getContextPath()%>/images/img_22.png" />
 												</span>
@@ -112,7 +123,7 @@
 											</a>
 										</li>
 										<li class="list">
-											<a href="#">
+											<a href="<%=request.getContextPath()%>/course/searchPage.do?type=5">
 												<span class="iconbox">
 													<img src="<%=request.getContextPath()%>/images/img_23.png" />
 												</span>
@@ -120,7 +131,7 @@
 											</a>
 										</li>
 										<li class="list">
-											<a href="#">
+											<a href="<%=request.getContextPath()%>/course/searchPage.do?type=6">
 												<span class="iconbox">
 													<img src="<%=request.getContextPath()%>/images/img_24.png" />
 												</span>
@@ -128,7 +139,7 @@
 											</a>
 										</li>
 										<li class="list">
-											<a href="#">
+											<a href="<%=request.getContextPath()%>/course/searchPage.do?type=7">
 												<span class="iconbox">
 													<img src="<%=request.getContextPath()%>/images/img_25.png" />
 												</span>
@@ -145,30 +156,32 @@
 				<div class="list-block media-list m_t_cut white_bg bor_gray_tcut">
 					<h2 class="tit tit-mar">热门推荐</h2>
 				      <ul class="bor_gray_tcut">
-				      	<c:forEach  var="item" items="${hotCourse0}">
+				      	<c:forEach  var="item" items="${hotCourse}">
 				      		<li>
-					      		<div class="item-content">
+					      		<div class="item-content" onclick="window.open('<%=request.getContextPath()%>/course/coursePage.do?id=${item.courseId}')">
 					      			<div class="item-media imgbox">
-					      				<img src="${item.url}" onclick="window.open('<%=request.getContextPath()%>/organization/organizationPage.do?id=' + ${item.organizationId})">
+					      				<img style="width: 80px;height: 80px" src="${item.headimg}">
 				      				</div>
 					      			<div class="item-inner">
 					      				<div class="item-title-row">
-					      					<div class="item-title icon-vip"><a href="<%=request.getContextPath()%>/organization/organizationPage.do?id=${item.organizationId}">${item.organizationName}</a></div>
+					      					<div class="item-title icon-vip">${item.organizationName}</div>
 					      				</div>
 					      				<div class="item-subtitle">
 					      					<div class="stars-list c_f">
+					      						<!-- 
 					      						<a href="javascript:void(0)" class="on"></a>
 					      						<a href="javascript:void(0)" class="on"></a>
 					      						<a href="javascript:void(0)" class="on"></a>
 					      						<a href="javascript:void(0)" class="on"></a>
 					      						<a href="javascript:void(0)" class="on"></a>
-					      						<span>${item.price}元/课时</span>
+					      						-->
+					      						<span>${item.price}</span>
 					      					</div>
 					      					<span class="item-subtitle dis">${item.courseName}</span>
 				      					</div>
 					      			</div>
 					      			<div class="item-media2 user-nums">
-					      				<a href="javascript:void(0)" class="icon-view" data-addnum>${item.readNum}</a>
+					      				<a href="javascript:void(0)" class="icon-view">${item.readNum}</a>
 					      				<a href="javascript:void(0)" class="icon-zan" data-addnum>${item.likeNum}</a>
 				      				</div>
 					      		</div>
@@ -176,14 +189,13 @@
 				      	</c:forEach>
 				      </ul>
 				</div>
-				<!--比一比输入框-->
+				<!--  
 				<div class="searchbar row mysearchar2">
 					<div class="search-input col-75">
 						<label class="icon icon-search" for="search"></label>
 						<input type="search" id="search" placeholder="请输入感兴趣的课程"></div>
 					<a class="btn-icon-add col-25">找一找</a>
 				</div>
-				<!--图文两张并列列表-->
 				<div class="grid-demo img-txt-lists2 white_bg bor_gray_tcut bor_gray_bcut">
 					<div class="row no-gutter">
 					        <div class="col-50">
@@ -216,24 +228,24 @@
 					        </div>
 					</div>
 				</div>
-				<div class="noticebox">
-					<div class="txt orange_txt" id="scrollobj">专家建议：凉爽的午后，泡一杯浓浓的咖啡，慵懒地窝在阳台上的靠椅里。</div>
-				</div>
+				-->
 				<div class="imgbox m_b_cut">
-					<a href="${banner.linkUrl}"><img src="${banner.pictureUrl}" /></a>
+					<!-- <a href="${banner.linkUrl}">-->
+						<img src="${banner.pictureUrl}" />
+					<!-- </a>-->
 				</div>
 				<!--三列并列列表-->
 				<div class="white_bg bor_gray_tbcut">
-					<h2 class="tit tit-mar">推荐课程</h2>
+					<h2 class="tit tit-mar">热门机构</h2>
 					<section class="">
 						<div class="swiper-container3 hidden">
 							  <div class="swiper-wrapper">
 								    <div class="swiper-slide blue-slide">
 									    <div class="img-lists-col3 cansel_scrollbar">
 											<div class="ins ">
-												<c:forEach  var="item" items="${hotCourse1}">
+												<c:forEach  var="item" items="${hotOrganization}">
 													<div class="item imgbox bor">
-														<a href="<%=request.getContextPath()%>/course/coursePage.do?id=${item.courseId}"><img src="${item.url}"></a>
+														<a href="<%=request.getContextPath()%>/organization/organizationPage.do?id=${item.organizationId}"><img style="width: 100px;height: 100px" src="${item.headimg}"></a>
 													</div>
 												</c:forEach>
 											</div>
@@ -251,7 +263,7 @@
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/demo.js"></script>
 	<script type="text/javascript">
   	var mySwiper = new Swiper('.swiper-container',{
-  	  loop: true,
+  	  	loop: true,
 		autoplay: 3000,
 		pagination: '.swiper-pagination',
 		paginationClickable :true,
@@ -276,7 +288,17 @@
 		//当滚动条滚动了初始内容的宽度时滚动条回到最左端
 		if (obj.scrollLeft>=obj.firstChild.offsetWidth) obj.scrollLeft=0;
 	}
-	setInterval("scroll(document.getElementById('scrollobj'))",20); 
+	setInterval("scroll(document.getElementById('scrollobj'))",20);
+	
+	function searchCourse(){
+		var courseName = $('#courseName').val();
+		if(courseName == '' || courseName == null){
+			window.location.href='<%=request.getContextPath()%>/course/searchPage.do';
+		}else{
+			window.location.href='<%=request.getContextPath()%>/course/searchPage.do?courseName=' + courseName;
+		}
+		
+	}
 	</script>
 </body>
 </html>

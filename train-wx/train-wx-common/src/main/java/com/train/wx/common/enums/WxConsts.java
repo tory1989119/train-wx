@@ -5,8 +5,11 @@ public interface WxConsts {
 	/** 获取token的URL路径 */
 	public static final String TOKEN_QUERY_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=%s&appid=%s&secret=%s";
 	
-	/** 获取网页token的URL路径 */
-	public static final String WY_TOKEN_QUERY_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=a%s";
+	/** 网页根据code获取opendi */
+	public static final String GET_OPENID_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=%s";
+	
+	/** 网页端根据code获取openid */
+	public static final String REQUST_WX_URL = "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=%s#wechat_redirect";
 
 	/** 用户管理-分组管理-新增分组 */
 	public static final String GROUP_CREATE_URL = "https://api.weixin.qq.com/cgi-bin/groups/create?access_token=%s";

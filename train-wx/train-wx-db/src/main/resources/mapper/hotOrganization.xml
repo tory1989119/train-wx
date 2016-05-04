@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.train.wx.db.dao.HotOrganizationDao">
+	<!-- 插入信息 -->
+	<insert id="insertHotOrganization" parameterType="HotOrganizationInfo" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO T_HOT_ORGANIZATION_INFO (ORGANIZATION_ID,CREATE_TIME)
+		VALUES (#{organizationId},#{type},NOW())
+	</insert>
+	
+	<!-- 查询列表 -->
+	<select id="queryHotOrganization" parameterType="HotOrganizationInfo" resultType="HotOrganizationDto" >
+		SELECT 
+		thci.ID id,
+		thci.ORGANIZATION_ID organizationId,
+		thci.CREATE_TIME createTime,
+		toi.HEADIMG headimg,
+		toi.NAME organizationName
+		FROM T_HOT_ORGANIZATION_INFO thci
+		LEFT JOIN T_ORGANIZATION_INFO toi ON toi.ID = thci.ORGANIZATION_ID
+	</select>
+	
+</mapper>

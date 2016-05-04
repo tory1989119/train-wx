@@ -4,8 +4,8 @@
 <mapper namespace="com.train.wx.db.dao.CourseDao">
 	<!-- 插入信息 -->
 	<insert id="insertCourse" parameterType="CourseInfo" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO T_COURSE_INFO (ORGANIZATION_ID,TYPE,NAME,AGE,CONTENT,FEATURE,IMG,CREATE_TIME)
-		VALUES (#{organizationId},#{type},#{name},#{age},#{content},#{feature},#{img},NOW())
+		INSERT INTO T_COURSE_INFO (ORGANIZATION_ID,TYPE,NAME,AGE,CONTENT,FEATURE,BANNERIMG,HEADIMG,CREATE_TIME)
+		VALUES (#{organizationId},#{type},#{name},#{age},#{content},#{feature},#{bannerimg},#{headimg},NOW())
 	</insert>
 	
 	<!-- 查询详细信息 -->
@@ -18,10 +18,36 @@
 		AGE age,
 		CONTENT content,
 		FEATURE feature,
-		IMG img,
+		BANNERIMG bannerimg,
+		HEADIMG headimg,
+		PRICE price,
+		CLASS_TIME classTime,
 		CREATE_TIME createTime
 		FROM T_COURSE_INFO
 		WHERE Id = #{id}
+	</select>
+	
+	<!-- 查询详细信息 -->
+	<select id="getCourseInfoByVoucher" parameterType="String" resultType="CourseDto" >
+		SELECT 
+		tci.ID id ,
+		tci.ORGANIZATION_ID organizationId,
+		tci.TYPE type,
+		tci.NAME name,
+		tci.AGE age,
+		tci.CONTENT content,
+		tci.FEATURE feature,
+		tci.BANNERIMG bannerimg,
+		tci.HEADIMG headimg,
+		tci.PRICE price,
+		tci.CLASS_TIME classTime,
+		tci.CREATE_TIME createTime,
+		toi.NAME organizationName,
+		tvi.ID voucherId
+		FROM T_COURSE_INFO tci
+		LEFT JOIN T_ORGANIZATION_INFO toi ON toi.ID = tci.ORGANIZATION_ID
+		LEFT JOIN T_VOUCHER_INFO tvi ON tvi.COURSE_ID = tci.ID
+		WHERE tci.Id = #{id}
 	</select>
 	
 	<!-- 查询列表 -->
@@ -34,25 +60,22 @@
 		AGE age,
 		CONTENT content,
 		FEATURE feature,
-		IMG img,
+		BANNERIMG bannerimg,
+		HEADIMG headimg,
+		PRICE price,
+		CLASS_TIME classTime,
 		CREATE_TIME createTime
 		FROM T_COURSE_INFO
 		WHERE 1=1
-		<if test="organizationId != null and organizationId != ''">
-			AND ORGANIZATION_ID = #{organizationId}
-		</if>
 		LIMIT #{begin},#{rows}
 	</select>
 	
 	<!-- 查询列表数 -->
 	<select id="countCourse" parameterType="SysSearchDto" resultType="int" >
 		SELECT 
-		count(*)
+		COUNT(*)
 		FROM T_COURSE_INFO
 		WHERE 1=1
-		<if test="organizationId != null and organizationId != ''">
-			AND ORGANIZATION_ID = #{organizationId}
-		</if>
 		LIMIT #{begin},#{rows}
 	</select>
 	
@@ -77,5 +100,75 @@
 		WHERE tci.ORGANIZATION_ID = #{organizationId}
 	</select>
 	
+	<!-- 查询列表 -->
+	<select id="queryCourseByOrganizationId" parameterType="String" resultType="CourseInfo" >
+		SELECT 
+		ID id ,
+		ORGANIZATION_ID organizationId,
+		TYPE type,
+		NAME name,
+		AGE age,
+		CONTENT content,
+		FEATURE feature,
+		BANNERIMG bannerimg,
+		HEADIMG headimg,
+		PRICE price,
+		CLASS_TIME classTime,
+		CREATE_TIME createTime
+		FROM T_COURSE_INFO
+		WHERE  ORGANIZATION_ID = #{organizationId}
+	</select>
+	
+	<!-- 查询列表 -->
+	<select id="queryCourses" parameterType="CourseDto" resultType="CourseDto" >
+		SELECT
+		tci.ID id,
+		tci.HEADIMG headimg,
+		tci.price price,
+		tci.class_time classTime,
+		tci.NAME name,
+		toi.NAME organizationName,
+		tvi.ID voucherId
+		FROM T_COURSE_INFO tci
+		LEFT JOIN T_ORGANIZATION_INFO toi ON toi.ID = tci.ORGANIZATION_ID
+		LEFT JOIN T_VOUCHER_INFO tvi ON tvi.COURSE_ID = tci.ID
+		WHERE 1=1
+		
+		<if test="type != null and type != ''">
+			AND tci.TYPE = #{type}
+		</if>
+		
+		<if test="name != null and name != ''">
+			AND tci.NAME LIKE CONCAT('%',#{name},'%')
+		</if>
+		
+		<if test="areaCode != null and areaCode != ''">
+			AND toi.AREA_CODE = #{areaCode}
+		</if>
+		
+		LIMIT #{begin},#{rows}
+	</select>
+	
+	<!-- 查询列表 -->
+	<select id="countCourses" parameterType="CourseDto" resultType="int" >
+		SELECT
+		COUNT(*)
+		FROM T_COURSE_INFO tci
+		LEFT JOIN T_ORGANIZATION_INFO toi ON toi.ID = tci.ORGANIZATION_ID
+		LEFT JOIN T_VOUCHER_INFO tvi ON tvi.COURSE_ID = tci.ID
+		WHERE 1=1
+		
+		<if test="type != null and type != ''">
+			AND tci.TYPE = #{type}
+		</if>
+		
+		<if test="name != null and name != ''">
+			AND tci.NAME LIKE CONCAT('%',#{name},'%')
+		</if>
+		
+		<if test="areaCode != null and areaCode != ''">
+			AND toi.AREA_CODE = #{areaCode}
+		</if>
+	</select>
 	
 </mapper>
